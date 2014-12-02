@@ -1,0 +1,216 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:gravity="center">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/select_map"
+            android:gravity="center_horizontal"
+            android:textSize="20sp" />
+        <Spinner
+            android:id="@+id/spinnerMaps"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="20dp" 
+            android:gravity="center"/>
+        <TextView
+            android:id="@+id/twUnits"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/select_units"
+            android:gravity="center_horizontal"
+            android:textSize="20sp" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/avto_up"/>
+            <EditText
+                android:id="@+id/twAvtoCount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:singleLine="true"
+                android:gravity="center_horizontal"
+                android:text="1" />
+        </LinearLayout>
+        
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/soldier_left_down"/>
+            <EditText
+                android:id="@+id/twSoldierCount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:singleLine="true"
+                android:gravity="center_horizontal"
+                android:text="1" />
+        </LinearLayout>
+        
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/horse_right_down"/>
+            <EditText
+                android:id="@+id/twHorseCount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:singleLine="true"
+                android:gravity="center_horizontal"
+                android:text="2" />
+        </LinearLayout>
+        
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/hotchkiss_up"/>
+            <EditText
+                android:id="@+id/twHotchkissCount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:singleLine="true"
+                android:gravity="center_horizontal"
+                android:text="1" />
+        </LinearLayout>
+        
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/t34_85_up"/>
+            <EditText
+                android:id="@+id/twT34_85Count"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:singleLine="true"
+                android:gravity="center_horizontal"
+                android:text="1" />
+        </LinearLayout>
+        
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/panzer_up"/>
+            <EditText
+                android:id="@+id/twPanzerCount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:singleLine="true"
+                android:gravity="center_horizontal"
+                android:text="1" />
+        </LinearLayout>
+        
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/tiger_up"/>
+            <EditText
+                android:id="@+id/twTigerCount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:singleLine="true"
+                android:gravity="center_horizontal"
+                android:text="1" />
+        </LinearLayout>
+        
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/artillery_right"/>
+            <EditText
+                android:id="@+id/twArtilleryCount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:singleLine="true"
+                android:gravity="center_horizontal"
+                android:text="1" />
+        </LinearLayout>
+
+		<LinearLayout
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:orientation="horizontal"
+			android:gravity="center">
+			<TextView
+				android:layout_width="0px"
+                android:layout_height="wrap_content"
+				android:layout_weight="1"
+				android:text="@string/two_players"/>
+			<TextView
+				android:layout_width="0px"
+                android:layout_height="wrap_content"
+				android:layout_weight="1"
+				android:text="@string/three_players"/>
+		</LinearLayout>
+		<RadioGroup
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:orientation="horizontal"
+			android:gravity="center">
+			<RadioButton
+				android:id="@+id/radioButtonTwo"
+				android:layout_width="0px"
+                android:layout_height="wrap_content"
+				android:layout_weight="1" />
+			<RadioButton
+				android:id="@+id/radioButtonThree"
+				android:layout_width="0px"
+                android:layout_height="wrap_content"
+				android:layout_weight="1" />
+		</RadioGroup>
+		
+    </LinearLayout>
+	
+</ScrollView>

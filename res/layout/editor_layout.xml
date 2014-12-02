@@ -1,0 +1,52 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent"
+              android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/back"
+            android:onClick="clickBack" />
+        <TextView
+            android:id="@+id/textViewEditor"
+            android:layout_width="0px"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/next"
+            android:onClick="clickNext" />
+
+    </LinearLayout>
+
+    <ua.naiksoftware.waronline.MapEditorView
+        android:id="@+id/map_editor_view"
+        android:layout_width="match_parent"
+        android:layout_height="0px"
+        android:layout_weight="1" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="7px"
+        android:background="#000000"/>
+
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ua.naiksoftware.waronline.MapEditorSelectView
+            android:id="@+id/select_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </HorizontalScrollView>
+
+</LinearLayout>

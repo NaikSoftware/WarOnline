@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">WarOnline</string>
+	
+    <string-array name="main_menu_arr">
+        <item>Передай-Играй</item>
+        <item>Играть Онлайн</item>
+        <item>Настройки</item>
+        <item>Инфо</item>
+    </string-array>
+
+	<string-array name="game_menu_arr">
+        <item>Меню</item>
+		<item>Конец хода</item>
+		<item>Авиация</item>
+		<item>Карта</item>
+		<item>Сдаться</item>
+		<item>Покинуть игру</item>
+	</string-array>
+	
+    <string name="edit_map">Редактирование карт</string>
+    <string name="input_map_name">Введите имя карты:</string>
+    <string name="input_map_size">Введите размер карты (тайлы):</string>
+    <string name="edit_map_not_valid">Имя не может быть пустым, ширина (10&#8230;1000), высота (10&#8230;1000)!</string>
+    <string name="delete_map_question">Удалить карту\u0020</string>
+    <string name="delete_map_complete">Удалено успешно!</string>
+    <string name="back">Назад</string>
+    <string name="next">Далее</string>
+    <string name="tile_inf">Создайте карту тайлов</string>
+    <string name="base1_inf">Позиция игрока 1</string>
+    <string name="base2_inf">Позиция игрока 2</string>
+    <string name="base3_inf">Позиция игрока 3</string>
+    <string name="units_inf">Позиция ничейных юнитов</string>
+    <string name="base">База</string>
+    <string name="exit_prompt">Нажмите еще раз для выхода</string>
+    <string name="select_units">Выберите юнитов</string>
+    <string name="save_map_prompt">Сохранить карту и выйти?</string>
+    <string name="no_base_selected">Выберите начальные позиции игроков!</string>
+    <string name="map_saved">Карта сохранена</string>
+    <string name="select_map">Выберите карту</string>
+    <string name="two_players">2 Игрока</string>
+	<string name="three_players">3 Игрока</string>
+	<string name="maps_not_found">Карты не обнаружены</string>
+	<string name="max_units_limit">Всего юнитов должно быть не более 9!</string>
+	<string name="fullscreen">Полноэкранный режим</string>
+	<string name="gamer_go_dialog">Ходит игрок</string>
+	<string name="sound_effects">Звуковые эффекты</string>
+	
+    <string name="info">
+        <b>Общее</b>\n
+        <p>Игра WarOnline создана для конкурса на http://annimon.com \n
+            В игре предусмотрен режим передай-и-играй, а также игра по Интернет.
+            Колличество игроков 2 или 3.</p>\n\n
+        <b>Игра</b>\n
+        <p>Сначала ыбираете колличество единиц техники (лимитировано) и карту.
+            Играть нужно не показывая игровое поле сопернику. В начале вы появляетесь на карте и вам виден соперник только в местах, где прошла ваша техника.
+            У каждой единицы свои особенности, которые вы должны понять в процессе игры.
+            Инжинерная машина умеет ставить и убирать мины. Сопернику не видны ваши мины, пока он
+            не проедет своей машиной вблизи от них. Урон наносится больше при стрельбе в бок или сзади.
+            Двойным нажатием по юниту можно посмотреть его состояние.
+			Нажимая в произвольном месте карты можно поворачивать юнитов.</p>\n\n
+        <b>Редактор карт</b>\n
+        <p>Вы можете создавать свои карты в настройках. Чтобы удалить карту -- длинное нажатие по ней в списке.
+            Создание состоит из нескольких этапов. Сначала делаете тайловую карту. Потом последовательно выбираете расположение баз противников (3 шт., могут использоваться только 2 первые при игре вдвоем).
+            Обратите внимание, что базы не могут перекрывать друг друга или располагаться на воде, камнях и т.п.
+            Последний этап (можно пропустить) -- выбираете расположение свободных юнитов, которых игроки смогут
+            захвачивать во время игры.</p>\n\n
+        <b>NaikSoftware (c), 2013-2014г.\n
+            Запрещено использовать графику из игры в других проектах без разрешения автора</b>
+    </string>
+</resources>
