@@ -1,9 +1,5 @@
 package ua.naiksoftware.waronline;
 
-import android.view.ViewGroup;
-import android.widget.FrameLayout;
-import ua.naiksoftware.waronline.unit.*;
-
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -15,17 +11,22 @@ import android.util.AttributeSet;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.FrameLayout;
 import android.widget.Scroller;
 import android.widget.TextView;
+import android.widget.Toast;
+import ua.naiksoftware.waronline.unit.Anim;
+import ua.naiksoftware.waronline.unit.DiedUnit;
+import ua.naiksoftware.waronline.unit.Unit;
+import ua.naiksoftware.waronline.unit.UnitCode;
 
 import java.util.ArrayList;
 import java.util.Collections;
 
-import android.widget.Toast;
-
-public class GameView extends View implements UnitDrawer {
+public class GameView extends View {
 
     private static final String tag = GameView.class.getName();
 
@@ -140,7 +141,6 @@ public class GameView extends View implements UnitDrawer {
         paintAttackRadius.setStrokeWidth(2);
         currentGamer = manager.getCurrentGamer();
         gameMap.setCurrentGamer(currentGamer);
-        Unit.drawer = this;
         init = true;
         selectNextUnit(Gamer.ONE);
         selectNextUnit(Gamer.TWO);
@@ -176,8 +176,14 @@ public class GameView extends View implements UnitDrawer {
             for (Unit unit : units) {
                 if (gameMap.isVisible(unit.getX(), unit.getY())) {
                     switch (unit.draw(canvas)) {
-                        case Unit.MOVE: // move in process
-                            invalidate();
+                        case Unit.NOT_MOVE:
+                            continue;// skip for iteration for skip invalidate()
+                            //case Unit.MOVE: // move in process
+                            //    break;
+                        case Unit.MOVE_TO_NEW_CELL:
+                            calcVisibility(unit);
+                            unit.continueMove();
+                            //haveMine(x, y);
                             break;
                         case Unit.END_MOVE: // end move
                             calcVisibility(unit);
@@ -187,8 +193,8 @@ public class GameView extends View implements UnitDrawer {
                             // для правильного наложения друг на друга полосы здоровья
                             Collections.sort(units, drawSortComparator);
                             blockTap = false;
-                            invalidate();
                     }
+                    postInvalidate();
                 }
             }
             for (Mine mine : mines) {
@@ -308,6 +314,9 @@ public class GameView extends View implements UnitDrawer {
                 int mapId = gameMap.getTileCode(xId, yId);
                 Unit unit = getUnit(xId, yId);
                 Node node = new Node(null, xId, yId, 0);
+                // Ниже закоментировано для возможности открытия меню действий
+                // текущего юнита, например походили инженерным авто, и хотим
+                // разминировать/минировать/лечить/исправить мост.
                 if (unit != null && /*unit != currentUnit &&*/ !unit.died()) {
                     if (unit.getGamer() == currentGamer) {
                         if (soundEffects) {
@@ -374,9 +383,15 @@ public class GameView extends View implements UnitDrawer {
         if (count == 0) {// gamer lose
             if (numberOfLosers() < (lose.length - 1)) {
                 switch (unit.getGamer()) {
-                    case ONE: lose[0] = true; break;
-                    case TWO: lose[1] = true; break;
-                    case THREE: lose[2] = true; break;
+                    case ONE:
+                        lose[0] = true;
+                        break;
+                    case TWO:
+                        lose[1] = true;
+                        break;
+                    case THREE:
+                        lose[2] = true;
+                        break;
                 }
             }
             if (numberOfLosers() == (lose.length - 1)) {
@@ -423,7 +438,7 @@ public class GameView extends View implements UnitDrawer {
         return null;
     }
 
-    @Override
+    // Never used
     public void haveMine(int x, int y) {
         Mine mine = getMine(x, y);
         if (mine != null) {
@@ -464,6 +479,7 @@ public class GameView extends View implements UnitDrawer {
                     scrollToCurrent();
                     //Log.d(tag, "calcGoing from selectNextUnit");
                     calcGoing();
+                    postInvalidate();
                 }
                 switch (g) {
                     case ONE:
@@ -607,9 +623,8 @@ public class GameView extends View implements UnitDrawer {
             for (int i = 0; i < 4; i++) {
                 int tmpx = newx[i];
                 int tmpy = newy[i];
-                if (tmpx < 0 || tmpx > wTiles - 1 || tmpy < 0 || tmpy > hTiles - 1) {
-                    continue;
-                } else {
+                if (tmpx < 0 || tmpx > wTiles - 1 || tmpy < 0 || tmpy > hTiles - 1) continue;
+                else {
                     int addP = currentUnit.calcPassability(gameMap.getTileCode(tmpx, tmpy));
                     Node addNode = new Node(n, tmpx, tmpy, currP + addP);
                     //Log.d(tag, "add node: " + addNode);
@@ -627,7 +642,6 @@ public class GameView extends View implements UnitDrawer {
             pathGo.addRect(selRect, Path.Direction.CW);
             pathGo.close();
         }
-        invalidate();
     }
 
     public void calcVisibility(Unit unit) {

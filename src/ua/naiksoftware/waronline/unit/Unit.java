@@ -4,15 +4,13 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.util.SparseIntArray;
-import filelog.Log;
-import java.util.ArrayList;
-import java.util.Comparator;
-
 import ua.naiksoftware.waronline.Gamer;
 import ua.naiksoftware.waronline.Node;
 import ua.naiksoftware.waronline.Tile;
 import ua.naiksoftware.waronline.TileCode;
+
+import java.util.ArrayList;
+import java.util.Comparator;
 
 public class Unit {
 
@@ -23,6 +21,7 @@ public class Unit {
     public static final int NOT_MOVE = 0;
     public static final int MOVE = 1;
     public static final int END_MOVE = 2;
+    public static final int MOVE_TO_NEW_CELL = 3;
 
     private final int code;
     private int x, y;
@@ -39,7 +38,7 @@ public class Unit {
     private long startAnim;
     private Bitmap[] anim;
     private int passability, usedPassability;
-    private ArrayList<Node> path;
+    private ArrayList<Node> path; // move path
     private int life;
     private int lifeColor;
     private static final int COLOR_LIFE_1 = Color.BLUE;
@@ -49,9 +48,6 @@ public class Unit {
     private static final int LIFE_HEIGHT = Tile.TILE_SIZE / 7;
     private static final int LIFE_WIDTH = Tile.TILE_SIZE;
 
-    public static UnitDrawer drawer;
-
-    // look even unit
     public Unit(int code, int x, int y) {
         this.lookY = -1;// изначально смотрят все вверх
         this.x = x;
@@ -217,7 +213,7 @@ public class Unit {
         } else {// спереди
             koefArmor = DB.armorFront.get(code);
         }
-        result -= (result * (float) (koefArmor / 100f));
+        result -= (result * (koefArmor / 100f));
 //        Log.d(tag, "result(armor)=" + result);
 //        Log.d(tag, "x1=" + x1 + " y1=" + y1);
 //        Log.d(tag, "x2=" + x2 + " y2=" + y2);
@@ -248,6 +244,7 @@ public class Unit {
         canvas.drawRect(2, 2, drawLife, LIFE_HEIGHT - 2, lifePaint);
     }
 
+    // Never used
     public int getLife() {
         return life;
     }
@@ -264,22 +261,21 @@ public class Unit {
             shift = time / DELAY;
             if ((dX != 0 && shift > (Math.abs(dX) - 3)) || (dY != 0 && shift > (Math.abs(dY) - 3))) {
                 //Log.d("Unit", "shift="+shift+" dx="+dX+" dy="+dY);
-                this.x += dX / Tile.TILE_SIZE;
-                this.y += dY / Tile.TILE_SIZE;
+                this.x += lookX; //dX / Tile.TILE_SIZE;
+                this.y += lookY; //dY / Tile.TILE_SIZE;
                 this.drawx = Tile.TILE_SIZE * x;
                 this.drawy = Tile.TILE_SIZE * y;
-                canvas.drawBitmap(anim[0], drawx, drawy, null);
-                shift = 0;
-                dX = 0;
-                dY = 0;
                 if (path.size() > 1) {
                     path.remove(0);
-                    setMove(path);
-                    return MOVE; // Клетка пройдена, идем на новую
+                    int index = ((int) (System.currentTimeMillis() - startAnim) / ANIM_DELAY) % anim.length;
+                    canvas.drawBitmap(anim[index], drawx, drawy, null);
+                    return MOVE_TO_NEW_CELL;
+                } else {
+                    canvas.drawBitmap(anim[0], drawx, drawy, null);
+                    startAnim = shift = 0;
+                    this.move = false;
+                    return END_MOVE; // Весь путь пройден
                 }
-                startAnim = 0;
-                this.move = false;
-                return END_MOVE;
             }
             int index = ((int) (System.currentTimeMillis() - startAnim) / ANIM_DELAY) % anim.length;
             if (dX < 0) {
@@ -299,16 +295,15 @@ public class Unit {
         }
     }
 
-    /* Вызывается каждую пройденную клетку поля */
     public void setMove(ArrayList<Node> path) {
-        if (drawer != null) {
-            drawer.calcVisibility(this);
-			drawer.haveMine(x, y);
-        }
-        if (startAnim == 0) {
-            startAnim = System.currentTimeMillis();
-        }
         this.path = path;
+        this.startAnim = System.currentTimeMillis();
+        move = true;
+        continueMove();
+    }
+    
+    /* Вызывается каждую пройденную клетку поля */
+    public void continueMove() {
         Node node = path.get(0);
         dX = (node.getX() - this.x) * Tile.TILE_SIZE;
         dY = (node.getY() - this.y) * Tile.TILE_SIZE;
@@ -328,9 +323,9 @@ public class Unit {
             anim = Anim.get(code + UnitCode.ID_UP);
         }
         startMove = System.currentTimeMillis();
-        move = true;
     }
 
+    // Never used
     public void setCoords(int x, int y) {
         move = false;
         this.x = x;
@@ -338,19 +333,11 @@ public class Unit {
     }
 
     public int getX() {
-        if (dX != 0) {
-            return x + shift / Tile.TILE_SIZE;
-        } else {
-            return x;
-        }
+        return x;
     }
 
     public int getY() {
-        if (dY != 0) {
-            return y + shift / Tile.TILE_SIZE;
-        } else {
-            return y;
-        }
+        return y;
     }
 
     public int getDrawX() {
@@ -446,6 +433,12 @@ public class Unit {
         return lifeColor;
     }
 
+    /** 
+     * Сортировщик: чем выше координата юнита (чем меньше y),
+     * тем раньше он будет отрисован.
+     * Для правильного наложения выступающих за размеры тайла (спрайта)
+     * элементов, например полоса жизней над юнитами.
+     */
     public static class DrawSortComparator implements Comparator<Unit> {
 
         @Override
