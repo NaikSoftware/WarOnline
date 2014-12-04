@@ -268,10 +268,7 @@ public class Unit {
                 if (path.size() > 1) {
                     path.remove(0);
                     int index = ((int) (System.currentTimeMillis() - startAnim) / ANIM_DELAY) % anim.length;
-                    // Чтобы не потерять пройденные лишние кадры
-                    // прибавляем (отнимаем) их к координатам
-                    drawx += dX != 0? (shift - dX)%dX: 0;
-                    drawy += dY != 0? (shift - dY)%dY: 0;
+
                     canvas.drawBitmap(anim[index], drawx, drawy, null);
                     return MOVE_TO_NEW_CELL;
                 } else {
