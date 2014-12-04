@@ -11,9 +11,6 @@ import android.view.View;
 import ua.naiksoftware.waronline.unit.Unit;
 import ua.naiksoftware.waronline.unit.UnitCode;
 
-/*
- * Полоса с тайлами (юнитами) в редакторе карт
- */
 public class MapEditorSelectView extends View {
 
     private static final String tag = MapEditorSelectView.class.getName();
@@ -124,7 +121,7 @@ public class MapEditorSelectView extends View {
             return true;
         }
 
-    }
+    };
 
     public void setOnSelectListener(OnSelectListener l) {
         listener = l;

@@ -1,7 +1,5 @@
 package ua.naiksoftware.waronline;
 
-import android.widget.*;
-
 import android.app.AlertDialog;
 import android.app.ListActivity;
 import android.app.Service;
@@ -13,14 +11,14 @@ import android.os.Bundle;
 import android.util.SparseIntArray;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.*;
 import android.widget.AdapterView.OnItemSelectedListener;
 import filelog.Log;
+import ua.naiksoftware.utils.bind.ParcelableBinder;
+import ua.naiksoftware.waronline.unit.UnitCode;
 
 import java.io.File;
 import java.util.ArrayList;
-
-import ua.naiksoftware.utils.bind.ParcelableBinder;
-import ua.naiksoftware.waronline.unit.UnitCode;
 
 /**
  * @author Naik
@@ -36,7 +34,6 @@ public class MainActivity extends ListActivity {
     private AlertDialog dialogStartGame;
     private RadioButton radioTwo, radioThree;
     private View dialogView;
-    private GameManager gameManager;
 
     /**
      * Called when the activity is first created.
@@ -123,8 +120,8 @@ public class MainActivity extends ListActivity {
                             int t34_85 = Math.abs(Integer.parseInt("0" + ((EditText) dialogView.findViewById(R.id.twT34_85Count)).getText().toString()));
                             int panzer = Math.abs(Integer.parseInt("0" + ((EditText) dialogView.findViewById(R.id.twPanzerCount)).getText().toString()));
                             int tiger = Math.abs(Integer.parseInt("0" + ((EditText) dialogView.findViewById(R.id.twTigerCount)).getText().toString()));
-                            int artilerry = Math.abs(Integer.parseInt("0" + ((EditText) dialogView.findViewById(R.id.twArtilleryCount)).getText().toString()));
-                            int all = avto + soldier + horse + hotchkiss + t34_85 + panzer + tiger + artilerry;
+                            int artillery = Math.abs(Integer.parseInt("0" + ((EditText) dialogView.findViewById(R.id.twArtilleryCount)).getText().toString()));
+                            int all = avto + soldier + horse + hotchkiss + t34_85 + panzer + tiger + artillery;
                             if (all > max) {
                                 throw new Exception(getString(R.string.max_units_limit));
                             }
@@ -135,7 +132,7 @@ public class MainActivity extends ListActivity {
                             arr.append(UnitCode.T34_85, t34_85);
                             arr.append(UnitCode.PANZER, panzer);
                             arr.append(UnitCode.TIGER, tiger);
-                            arr.append(UnitCode.ARTILLERY, artilerry);
+                            arr.append(UnitCode.ARTILLERY, artillery);
                         } catch (Exception e) {
                             Toast.makeText(MainActivity.this, e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
                             return;
