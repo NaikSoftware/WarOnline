@@ -43,7 +43,6 @@ public class GameView extends View {
     private boolean show;
     private int idx1 = 0, idx2 = 0, idx3 = 0;// indexes in unit array for queue
     private boolean[] lose;
-    private boolean init;
     private Path pathGoShot, pathGo;
     private Paint paintGoShot, paintGo;
     private Unit currentUnit;
@@ -141,15 +140,12 @@ public class GameView extends View {
         paintAttackRadius.setStrokeWidth(2);
         currentGamer = manager.getCurrentGamer();
         gameMap.setCurrentGamer(currentGamer);
-        init = true;
         selectNextUnit(Gamer.ONE);
         selectNextUnit(Gamer.TWO);
         if (lose.length > 2) {
             selectNextUnit(Gamer.THREE);
         }
-        init = false;
         show = true;
-        selectNextUnit();// выбрать и рассчитать путь для одного из юнитов текущего игрока
     }
 
     @Override
@@ -177,7 +173,7 @@ public class GameView extends View {
                 if (gameMap.isVisible(unit.getX(), unit.getY())) {
                     switch (unit.draw(canvas)) {
                         case Unit.NOT_MOVE:
-                            continue;// skip for iteration for skip invalidate()
+                            continue;// skip "for" iteration for skip invalidate()
                             //case Unit.MOVE: // move in process
                             //    break;
                         case Unit.MOVE_TO_NEW_CELL:
@@ -474,7 +470,7 @@ public class GameView extends View {
             unit = units.get(i);
             // возможно нужно добавить проверку ничейный ли юнит в NetBeans
             if (unit.getGamer() == g) {
-                if (!init) {
+                if (g == currentGamer) {
                     currentUnit = unit;
                     scrollToCurrent();
                     //Log.d(tag, "calcGoing from selectNextUnit");
